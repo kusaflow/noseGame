@@ -21,7 +21,9 @@ AmainChar::AmainChar()
 	cameraBoom->TargetArmLength = 800;
 	cameraBoom->SetRelativeRotation(FRotator(-20, -70, 0.f));
 	//cameraBoom->RelativeRotation = FRotator(0.f, 0.f, 0.f);
-	//cameraBoom->bUsePawnControlRotation = false;
+	cameraBoom->bInheritPitch = cameraBoom->bInheritRoll = cameraBoom->bInheritYaw = false;
+
+	bUseControllerRotationYaw = false;
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(cameraBoom, USpringArmComponent::SocketName);
@@ -33,6 +35,8 @@ AmainChar::AmainChar()
 void AmainChar::BeginPlay()
 {
 	Super::BeginPlay();
+
+	bisWalking = false;
 	
 }
 
@@ -40,6 +44,22 @@ void AmainChar::BeginPlay()
 void AmainChar::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	//WAlking or runnign 
+	if (bisWalking)
+		velocityShouldBe = 200;
+	else
+		velocityShouldBe = 600;
+
+	SetVelForAnim();
+
+	if (velocityShouldBe > GetCharacterMovement()->MaxWalkSpeed)
+		GetCharacterMovement()->MaxWalkSpeed += 600 * DeltaTime;
+	else if (velocityShouldBe < GetCharacterMovement()->MaxWalkSpeed)
+		GetCharacterMovement()->MaxWalkSpeed -= 600 * DeltaTime;
+
+	//velocity for animation
+	
 	
 }
 
@@ -48,10 +68,12 @@ void AmainChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	//PlayerInputComponent->BindAxis("forward", this, &AmainChar::moveForward);
+	PlayerInputComponent->BindAxis("forward", this, &AmainChar::moveForward);
 
 	PlayerInputComponent->BindAxis("xAxis", this, &AmainChar::CameraYaw_z);
 	PlayerInputComponent->BindAxis("yAxis", this, &AmainChar::CameraPitch_y);
+
+	PlayerInputComponent->BindAxis("walking", this, &AmainChar::isWalking);
 
 
 }
@@ -76,12 +98,25 @@ void AmainChar::moveForward(float val) {
 	const FRotator YawRotation(0.0f, Rotation.Yaw, 0.0f);
 	const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 
-	//if (val != 0) 
-		RootComponent->SetWorldRotation(FRotator(0, cameraBoom->GetComponentRotation().Yaw,0));
+	if (val != 0) 
+		RootComponent->SetWorldRotation(YawRotation);
 	
 	//UE_LOG( LogTemp, Warning, TEXT("sdsdsdsd"))
 
 	AddMovementInput(Direction, val);
 }
+
+void AmainChar :: isWalking(float val) {
+	if (val == 1)
+		bisWalking = true;
+	else
+		bisWalking = false;
+}
+
+
+
+
+
+
 
 

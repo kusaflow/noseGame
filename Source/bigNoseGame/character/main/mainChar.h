@@ -22,6 +22,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class UCameraComponent* FollowCamera;
 
+
+	bool bisWalking;
+
+	float velocityShouldBe;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = kusavar, meta = (AllowPrivateAccess = "true"))
+	float velForAnim;
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -41,6 +50,11 @@ public:
 
 	UFUNCTION()
 		void moveForward(float val);
+	UFUNCTION()
+		void isWalking(float val);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "kusaFx")
+		void SetVelForAnim();
 
 
 };

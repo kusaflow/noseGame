@@ -13,5 +13,14 @@ UCLASS()
 class BIGNOSEGAME_API UmainC_M_AnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
+public :
+	virtual void NativeInitializeAnimation() override;
+
+	UFUNCTION(BlueprintCallable, Category = "AnimProperty")
+		void update();
+
+	//var
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "kusaVar")
+	float playerVel;
 	
 };
