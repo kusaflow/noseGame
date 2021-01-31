@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Animation/AnimMontage.h"
 
 // Sets default values
 AmainChar::AmainChar()
@@ -54,11 +55,23 @@ void AmainChar::Tick(float DeltaTime)
 	SetVelForAnim();
 
 	if (velocityShouldBe > GetCharacterMovement()->MaxWalkSpeed)
-		GetCharacterMovement()->MaxWalkSpeed += 600 * DeltaTime;
+		GetCharacterMovement()->MaxWalkSpeed += 100 * DeltaTime;
 	else if (velocityShouldBe < GetCharacterMovement()->MaxWalkSpeed)
-		GetCharacterMovement()->MaxWalkSpeed -= 600 * DeltaTime;
+		GetCharacterMovement()->MaxWalkSpeed -= 100 * DeltaTime;
 
-	//velocity for animation
+	//falling
+	//falling Montage
+	if (bIsFalling != GetCharacterMovement()->IsFalling()) {
+		if (bIsFalling == true) {
+			//play jumping
+			//GetMesh()->GetAnimInstance()->Montage_Play(landing);
+		}
+		else {
+			//play landing
+
+		}
+	}
+	bIsFalling = GetCharacterMovement()->IsFalling();
 	
 	
 }

@@ -14,6 +14,7 @@ void UmainC_M_AnimInstance::update() {
 
 	if (player) {
 		playerVel = player->velForAnim;
+		bIsFalling = player->bIsFalling;
 	}
 
 }

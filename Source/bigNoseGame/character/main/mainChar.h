@@ -30,6 +30,12 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = kusavar, meta = (AllowPrivateAccess = "true"))
 	float velForAnim;
 
+	//falling
+	bool bIsFalling;
+
+	//animMintages
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "montages", meta = (AllowPrivateAccess = "true"))
+	class UAnimMontage* landing;
 
 protected:
 	// Called when the game starts or when spawned

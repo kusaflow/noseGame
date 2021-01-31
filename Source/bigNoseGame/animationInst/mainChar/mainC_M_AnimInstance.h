@@ -22,5 +22,8 @@ public :
 	//var
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "kusaVar")
 	float playerVel;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "kusaVar")
+	bool bIsFalling;
 	
 };
