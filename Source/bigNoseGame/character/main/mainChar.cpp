@@ -55,9 +55,9 @@ void AmainChar::Tick(float DeltaTime)
 	SetVelForAnim();
 
 	if (velocityShouldBe > GetCharacterMovement()->MaxWalkSpeed)
-		GetCharacterMovement()->MaxWalkSpeed += 100 * DeltaTime;
+		GetCharacterMovement()->MaxWalkSpeed += 600 * DeltaTime;
 	else if (velocityShouldBe < GetCharacterMovement()->MaxWalkSpeed)
-		GetCharacterMovement()->MaxWalkSpeed -= 100 * DeltaTime;
+		GetCharacterMovement()->MaxWalkSpeed -= 600 * DeltaTime;
 
 	//falling
 	//falling Montage
